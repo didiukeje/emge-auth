@@ -17,7 +17,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/users/add", {
+      const response = await api.post("users/add", {
         ...formData,
       });
       console.log("User created:", response);
@@ -33,7 +33,7 @@ const SignUp = () => {
       style={{ backgroundImage: `url(/backgrond.jpg)` }}
     >
       <div className="bg-white p-8 rounded-lg shadow-md w-96 bg-opacity-90">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Create an account</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Username</label>

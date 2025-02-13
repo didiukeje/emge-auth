@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://dummyjson.com", // Base URL for all requests
+  baseURL: "https://dummyjson.com/", // Base URL for all requests
   headers: {
     "Content-Type": "application/json", // Default headers
   },
