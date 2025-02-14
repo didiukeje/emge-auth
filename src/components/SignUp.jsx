@@ -100,6 +100,22 @@ const SignUp = () => {
               autoComplete="new-password"
             />
           </div>
+          <div className="mb-6">
+            <label className="block text-white text-sm font-medium mb-2">
+             Confirm Password
+              <span className="text-xs text-gray-300 ml-2">(minimum 8 characters)</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+              minLength="8"
+              autoComplete="new-password"
+            />
+          </div>
           {error && (
             <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
               {error}
