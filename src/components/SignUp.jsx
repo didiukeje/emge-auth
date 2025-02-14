@@ -29,14 +29,13 @@ const SignUp = () => {
 
   return (
     <div
-      className="min-h-screen w-full flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: `url(/backgrond.jpg)` }}
+      className="min-h-screen bg-black/80 w-full flex items-center justify-center bg-cover bg-center"
     >
-      <div className="bg-white p-8 rounded-lg shadow-md w-96 bg-opacity-90">
-        <h2 className="text-2xl font-bold mb-6 text-center">Create an account</h2>
+      <div className="bg-white/10 backdrop-blur-md p-8 rounded-lg shadow-md w-96 bg-opacity-90">
+        <h2 className="text-2xl text-white font-bold mb-6 text-center">Create an account</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Username</label>
+            <label className="block text-white text-sm font-medium mb-2">Username</label>
             <input
               type="text"
               name="username"
@@ -47,7 +46,7 @@ const SignUp = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Email</label>
+            <label className="block text-white text-sm font-medium mb-2">Email</label>
             <input
               type="email"
               name="email"
@@ -58,7 +57,7 @@ const SignUp = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-2">Password</label>
+            <label className="block text-white text-sm font-medium mb-2">Password</label>
             <input
               type="password"
               name="password"
