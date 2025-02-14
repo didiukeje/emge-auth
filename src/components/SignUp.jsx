@@ -9,26 +9,26 @@ const SignUp = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     // Clear error when user starts typing
-    if (error) setError('');
+    if (error) setError("");
   };
 
   const validateForm = () => {
     if (!formData.username.trim()) {
-      setError('Username is required');
+      setError("Username is required");
       return false;
     }
-    if (!formData.email.includes('@')) {
-      setError('Please enter a valid email');
+    if (!formData.email.includes("@")) {
+      setError("Please enter a valid email");
       return false;
     }
     if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters');
+      setError("Password must be at least 8 characters");
       return false;
     }
     return true;
@@ -37,9 +37,9 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    
+
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
       const response = await api.post("users/add", {
@@ -49,7 +49,7 @@ const SignUp = () => {
       navigate("/signin");
     } catch (error) {
       console.error("Error signing up:", error);
-      setError(error.response?.data?.message || 'Failed to sign up. Please try again.');
+      setError(error.response?.data?.message || "Failed to sign up. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -110,9 +110,19 @@ const SignUp = () => {
             disabled={isLoading}
             className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
-            {isLoading ? 'Creating account...' : 'Sign Up'}
+            {isLoading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
+        {/* Add "Already have an account? Sign in" link */}
+        <p className="mt-4 text-center text-white">
+          Already have an account?{" "}
+          <button
+            onClick={() => navigate("/signin")}
+            className="text-blue-500 hover:text-blue-600 font-semibold underline"
+          >
+            Sign in
+          </button>
+        </p>
       </div>
     </div>
   );
