@@ -67,7 +67,7 @@ const SignUp = () => {
               name="username"
               value={formData.username}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full bg-white/5 text-white text-[16px] p-2 border-none outline-none rounded-lg"
               required
               autoComplete="username"
             />
@@ -79,7 +79,7 @@ const SignUp = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full bg-white/5 text-white text-[16px] p-2 border-none outline-none rounded-lg"
               required
               autoComplete="email"
             />
@@ -94,7 +94,7 @@ const SignUp = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full bg-white/5 text-white text-[16px] p-2 border-none outline-none rounded-lg"
               required
               minLength="8"
               autoComplete="new-password"
@@ -110,7 +110,7 @@ const SignUp = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full bg-white/5 text-white text-[16px] p-2 border-none outline-none rounded-lg"
               required
               minLength="8"
               autoComplete="new-password"
