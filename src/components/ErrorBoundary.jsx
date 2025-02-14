@@ -13,6 +13,7 @@ class ErrorBoundary extends Component {
   componentDidCatch(error, errorInfo) {
     console.error("Error caught by ErrorBoundary:", error, errorInfo);
   }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -23,7 +24,8 @@ class ErrorBoundary extends Component {
         </div>
       );
     }
-    return this.props;
+    // Fix: Return this.props.children instead of this.props
+    return this.props.children;
   }
 }
 
