@@ -113,7 +113,7 @@ const SignIn = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-transparent border-solid border-[1px] border-gray-400 text-white p-2 rounded-lg hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "Signing in..." : "Sign In"}
           </button>
