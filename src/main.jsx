@@ -5,29 +5,34 @@ import App from "./App";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
-import ErrorBoundary from "./components/ErrorBoundary"; // Import the ErrorBoundary component
+import ErrorBoundary from "./components/ErrorBoundary";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import "./index.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Router>
-      <ToastContainer />
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-        {/* Wrap the Dashboard route with ErrorBoundary */}
-        <Route
-          path="/dashboard"
-          element={
-            <ErrorBoundary>
-              <Dashboard />
-            </ErrorBoundary>
-          }
-        />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <ToastContainer />
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ErrorBoundary>
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              </ErrorBoundary>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   </React.StrictMode>
 );
