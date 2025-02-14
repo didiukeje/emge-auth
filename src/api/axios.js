@@ -1,17 +1,22 @@
-import axios from "axios";
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://dummyjson.com/", // Base URL for all requests
+  baseURL: 'https://dummyjson.com',
   headers: {
-    "Content-Type": "application/json", // Default headers
+    'Content-Type': 'application/json',
   },
 });
 
-// Add interceptors if needed (e.g., for handling errors globally)
-api.interceptors.response.use(
-  (response) => response.data, // Return only the data from the response
+// Add a request interceptor to include the token in all requests
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
   (error) => {
-    console.error("API Error:", error);
     return Promise.reject(error);
   }
 );

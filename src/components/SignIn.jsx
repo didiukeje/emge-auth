@@ -2,31 +2,55 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
     try {
-      const response = await api.post("auth/login", {
+      const response = await api.post("/auth/login", {
         username: formData.username,
         password: formData.password,
       });
-      console.log("User signed in:", response);
-      toast.success("User Signed In");
-      navigate("/dashboard"); // Redirect to dashboard
+
+      // Store user data and token
+      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem('token', response.data.token);
+      
+      // Set the token in axios defaults for future requests
+      api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      
+      toast.success(`Welcome back, ${response.data.firstName}!`);
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error signing in:", error);
+      setError(
+        'Invalid credentials. Please use the test account below.'
+      );
+      toast.error("Sign in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    toast.info("Google Sign In is not implemented in the demo");
   };
 
   return (
@@ -35,7 +59,7 @@ const SignIn = () => {
         <span className="text-[1.5rem] text-white block font-bold mb-[3.6rem] text-center">
           Sign In
         </span>
-        <form onSubmit={handleSubmit} className="form-container-element ">
+        <form onSubmit={handleSubmit} className="form-container-element">
           <div className="mb-4">
             <label className="block text-sm font-medium text-white mb-2">
               Username
@@ -48,10 +72,11 @@ const SignIn = () => {
               className="w-full bg-white/5 text-white text-[16px] p-2 border-none outline-none rounded-lg"
               placeholder="Enter Username"
               required
+              disabled={isLoading}
             />
           </div>
-          <div className="mb-[3rem]">
-            <label className="block text-sm font-medium  text-white mb-2">
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-white mb-2">
               Password
             </label>
             <input
@@ -62,16 +87,39 @@ const SignIn = () => {
               className="w-full bg-white/5 text-white text-[16px] p-2 border-none outline-none rounded-lg"
               required
               placeholder="Enter Password"
+              disabled={isLoading}
             />
           </div>
+
+          {/* Test Account Info */}
+          <div className="mb-6 p-4 bg-white/5 rounded-lg">
+            <h3 className="text-white text-sm font-medium mb-2">Test Account Credentials:</h3>
+            <div className="text-gray-300 text-sm">
+              <p>Username: <span className="text-blue-400">oliviaw</span></p>
+              <p>Password: <span className="text-blue-400">oliviawpass</span></p>
+            </div>
+          </div>
+          
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 text-red-200 rounded text-sm">
+              {error}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-transparent border-solid border-[1px] border-gray-400 text-white p-2 rounded-lg"
+            disabled={isLoading}
+            className="w-full bg-transparent border-solid border-[1px] border-gray-400 text-white p-2 rounded-lg hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Sign In
+            {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
 
-          <button className="google-button-container mt-[2rem]  w-full border-solid border-[1px] py-[.8rem] border-gray-100 rounded-[13px] flex items-center justify-center gap-3">
+          <button 
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={isLoading}
+            className="google-button-container mt-[2rem] w-full border-solid border-[1px] py-[.8rem] border-gray-100 rounded-[13px] flex items-center justify-center gap-3 hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <FaGoogle color="white" size={18} />
             <span className="block text-white">Sign in with Google</span>
           </button>

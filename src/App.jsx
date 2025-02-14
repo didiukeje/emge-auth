@@ -2,7 +2,7 @@
 // import { Helmet } from "react-helmet";
 import './App.css'
 import Navbar from "./components/Navbar";
-
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
 
   // function DynamicTitle() {
