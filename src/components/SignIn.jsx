@@ -113,7 +113,11 @@ const SignIn = () => {
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
-
+          <div className="relative flex items-center justify-center my-6">
+            <span className="relative px-2 text-sm text-gray-300">
+              or Continue With
+            </span>
+         </div>
           <button 
             type="button"
             onClick={handleGoogleSignIn}
@@ -123,6 +127,15 @@ const SignIn = () => {
             <FaGoogle color="white" size={18} />
             <span className="block text-white">Sign in with Google</span>
           </button>
+          <p className="mt-4 text-center text-white">
+           Don&apos;t have an account?{" "} 
+          <button
+            onClick={() => navigate("/signup")}
+            className="text-blue-500 hover:text-blue-600 font-semibold underline"
+          >
+            Sign up
+          </button>
+        </p>
         </form>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import App from "./App";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
@@ -18,7 +17,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Router>
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<App />} />
+          {/* Redirect from / to /signup */}
+          <Route path="/" element={<Navigate to="/signup" />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route
