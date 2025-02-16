@@ -29,11 +29,10 @@ const SignIn = () => {
         password: formData.password,
       });
 
-      // Store user data and token
+      
       localStorage.setItem('user', JSON.stringify(response.data));
       localStorage.setItem('token', response.data.token);
       
-      // Set the token in axios defaults for future requests
       api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
       
       toast.success(`Welcome back, ${response.data.firstName}!`);
