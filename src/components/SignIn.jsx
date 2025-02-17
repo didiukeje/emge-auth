@@ -1,27 +1,30 @@
+// src/components/SignIn.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { FaGoogle } from "react-icons/fa";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 const SignIn = () => {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (error) setError('');
+    if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
       const response = await api.post("/auth/login", {
@@ -29,20 +32,19 @@ const SignIn = () => {
         password: formData.password,
       });
 
-      // Store user data and token
-      localStorage.setItem('user', JSON.stringify(response.data));
-      localStorage.setItem('token', response.data.token);
-      
-      // Set the token in axios defaults for future requests
-      api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      
-      toast.success(`Welcome back, ${response.data.firstName}!`);
-      navigate("/dashboard");
+      if (response.data.token) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("token", response.data.token);
+        login(response.data.token); // Call the login function from AuthContext
+
+        api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+
+        toast.success(`Welcome back!`);
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Error signing in:", error);
-      setError(
-        'Invalid credentials. Please use the test account below.'
-      );
+      setError("Invalid credentials. Please use the test account below.");
       toast.error("Sign in failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -93,13 +95,19 @@ const SignIn = () => {
 
           {/* Test Account Info */}
           <div className="mb-6 p-4 bg-white/5 rounded-lg">
-            <h3 className="text-white text-sm font-medium mb-2">Test Account Credentials:</h3>
+            <h3 className="text-white text-sm font-medium mb-2">
+              Test Account Credentials:
+            </h3>
             <div className="text-gray-300 text-sm">
-              <p>Username: <span className="text-blue-400">oliviaw</span></p>
-              <p>Password: <span className="text-blue-400">oliviawpass</span></p>
+              <p>
+                Username: <span className="text-blue-400">oliviaw</span>
+              </p>
+              <p>
+                Password: <span className="text-blue-400">oliviawpass</span>
+              </p>
             </div>
           </div>
-          
+
           {error && (
             <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 text-red-200 rounded text-sm">
               {error}
@@ -109,16 +117,18 @@ const SignIn = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-transparent border-solid border-[1px] border-gray-400 text-white p-2 rounded-lg hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? "Signing in..." : "Sign In"}
           </button>
+
           <div className="relative flex items-center justify-center my-6">
             <span className="relative px-2 text-sm text-gray-300">
               or Continue With
             </span>
-         </div>
-          <button 
+          </div>
+
+          <button
             type="button"
             onClick={handleGoogleSignIn}
             disabled={isLoading}
@@ -127,15 +137,16 @@ const SignIn = () => {
             <FaGoogle color="white" size={18} />
             <span className="block text-white">Sign in with Google</span>
           </button>
+
           <p className="mt-4 text-center text-white">
-           Don&apos;t have an account?{" "} 
-          <button
-            onClick={() => navigate("/signup")}
-            className="text-blue-500 hover:text-blue-600 font-semibold underline"
-          >
-            Sign up
-          </button>
-        </p>
+            Don&apos;t have an account?{" "}
+            <button
+              onClick={() => navigate("/signup")}
+              className="text-blue-500 hover:text-blue-600 font-semibold underline"
+            >
+              Sign up
+            </button>
+          </p>
         </form>
       </div>
     </div>

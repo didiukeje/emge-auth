@@ -1,3 +1,4 @@
+// src/api/axios.js
 import axios from 'axios';
 
 const api = axios.create({
@@ -7,7 +8,7 @@ const api = axios.create({
   },
 });
 
-// Add a request interceptor to include the token in all requests
+// Add both request and response interceptors
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -17,6 +18,18 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/signin';
+    }
     return Promise.reject(error);
   }
 );
