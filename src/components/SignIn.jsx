@@ -32,16 +32,13 @@ const SignIn = () => {
         password: formData.password,
       });
 
-      if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-        localStorage.setItem("token", response.data.token);
-        login(response.data.token); // Call the login function from AuthContext
-
-        api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-
-        toast.success(`Welcome back!`);
-        navigate("/dashboard");
-      }
+      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem('token', response.data.token);
+      
+      api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      
+      toast.success(`Welcome back, ${response.data.firstName}!`);
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error signing in:", error);
       setError("Invalid credentials. Please use the test account below.");
@@ -93,7 +90,6 @@ const SignIn = () => {
             />
           </div>
 
-          {/* Test Account Info */}
           <div className="mb-6 p-4 bg-white/5 rounded-lg">
             <h3 className="text-white text-sm font-medium mb-2">
               Test Account Credentials:
