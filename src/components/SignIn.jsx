@@ -65,9 +65,9 @@ const SignIn = () => {
   return (
     <div className="min-h-screen bg-black/80 flex items-center justify-center">
      <div className="bg-white/10 backdrop-blur-md p-8 rounded-lg shadow-md w-96 bg-opacity-90">
-        <span className="text-[1.5rem] text-white block font-bold mb-[3.6rem] text-center">
+       <h2 className="text-2xl text-white font-bold mb-6 text-center">
           Sign In
-        </span>
+        </h2>
         <form onSubmit={handleSubmit} className="form-container-element">
           <div className="mb-4">
             <label className="block text-sm font-medium text-white mb-2">
@@ -100,7 +100,7 @@ const SignIn = () => {
             />
           </div>
 
-          <div className="mb-6 p-4 bg-white/5 rounded-lg">
+          <div className="mb-4 p-4 bg-white/5 rounded-lg">
             <h3 className="text-white text-sm font-medium mb-2">
               Test Account Credentials:
             </h3>
@@ -138,7 +138,7 @@ const SignIn = () => {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={isLoading}
-            className="google-button-container mt-[2rem] w-full border-solid border-[1px] py-[.8rem] border-gray-100 rounded-[13px] flex items-center justify-center gap-3 hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="google-button-container mt-[1rem] w-full border-solid border-[1px] py-[.8rem] border-gray-100 rounded-[13px] flex items-center justify-center gap-3 hover:bg-white/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <FaGoogle color="white" size={18} />
             <span className="block text-white">Sign in with Google</span>
