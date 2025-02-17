@@ -64,7 +64,7 @@ const SignIn = () => {
 
   return (
     <div className="min-h-screen bg-black/80 flex items-center justify-center">
-      <div className="bg-white/10 backdrop-blur-md md:p-8 p-4 rounded-[10px] max-w-[30rem] min-h-[30rem] w-[90%]">
+     <div className="bg-white/10 backdrop-blur-md p-8 rounded-lg shadow-md w-96 bg-opacity-90">
         <span className="text-[1.5rem] text-white block font-bold mb-[3.6rem] text-center">
           Sign In
         </span>
