@@ -1,4 +1,3 @@
-// src/components/ProtectedRoute.jsx
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import PropTypes from "prop-types";
@@ -8,7 +7,6 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 
   if (!isAuthenticated) {
-    // Redirect to signin while saving the attempted location
     return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 

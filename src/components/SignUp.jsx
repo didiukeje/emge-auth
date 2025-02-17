@@ -14,7 +14,6 @@ const SignUp = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear error when user starts typing
     if (error) setError("");
   };
 
@@ -129,7 +128,6 @@ const SignUp = () => {
             {isLoading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
-        {/* Add "Already have an account? Sign in" link */}
         <p className="mt-4 text-center text-white">
           Already have an account?{" "}
           <button

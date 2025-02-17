@@ -1,4 +1,3 @@
-// src/components/SignIn.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
@@ -32,8 +31,19 @@ const SignIn = () => {
         password: formData.password,
       });
 
+      if (response.data.token) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("token", response.data.token);
+        login(response.data.accessToken); 
+
+        api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+
+        toast.success(`Welcome back!`);
+        navigate("/dashboard");
+      }
+      
       localStorage.setItem('user', JSON.stringify(response.data));
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', response.data.accessToken);
       
       api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
       
